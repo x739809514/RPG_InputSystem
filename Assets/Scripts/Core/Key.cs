@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 /// <summary>
@@ -10,22 +11,23 @@ public enum KeyTrigger
     Continue,
 }
 
+[Serializable]
 public class Key
 {
     public string name;
     public KeyTrigger trigger;
+    [HideInInspector]
     public bool enable=true;
+    [HideInInspector]
     public bool isDown;
+    [HideInInspector]
     public bool isDoubleDown;
+    [HideInInspector]
     public bool acceptDoubleDown;
     public float interval = 1f;
+    [HideInInspector]
     public float realInterval;
-    private KeyCode keyCode;
-    
-    public KeyCode GetKey()
-    {
-        return keyCode;
-    }
+    public KeyCode keyCode;
 
     public void SetKey(KeyCode key)
     {
@@ -39,19 +41,18 @@ public class Key
     }
 }
 
+[Serializable]
 public class ValueKey
 {
     public string name;
     public Vector2 range = new Vector2(0, 1);
+    [HideInInspector]
     public float value;
     public float addSpeed = 1f;
-    private KeyCode keyCode;
+    public KeyCode keyCode;
+    [HideInInspector]
     public bool enable;
 
-    public KeyCode GetKey()
-    {
-        return keyCode;
-    }
     public void SetKey(KeyCode key)
     {
         keyCode = key;
@@ -64,25 +65,18 @@ public class ValueKey
     }
 }
 
+[Serializable]
 public class AxisKey
 {
     public string name;
     public Vector2 range = new Vector2(-1, 1);
+    [HideInInspector]
     public float value;
-    private KeyCode posKey;
-    private KeyCode negKey;
+    public KeyCode posKey;
+    public KeyCode negKey;
     public float addSpeed = 1f;
+    [HideInInspector]
     public bool enable;
-
-    public KeyCode GetPosKey()
-    {
-        return posKey;
-    }
-
-    public KeyCode GetNegKey()
-    {
-        return negKey;
-    }
 
     public void SetKey(KeyCode pos, KeyCode neg)
     {

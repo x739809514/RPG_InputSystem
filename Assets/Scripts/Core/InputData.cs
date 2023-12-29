@@ -6,7 +6,8 @@ using LitJson;
 
 namespace Core
 {
-    public class InputData
+    [CreateAssetMenu(menuName = "MyAssets/InputData",fileName = "InputData")]
+    public class InputData : ScriptableObject
     {
         public List<Key> keys;
         public List<ValueKey> valueKeys;
@@ -139,7 +140,7 @@ namespace Core
                 switch (key.trigger)
                 {
                     case KeyTrigger.Once:
-                        if (Input.GetKeyDown(key.GetKey()))
+                        if (Input.GetKeyDown(key.keyCode))
                         {
                             key.isDown = true;
                         }
@@ -157,12 +158,12 @@ namespace Core
                             }
                             else
                             {
-                                if (Input.GetKeyDown(key.GetKey()))
+                                if (Input.GetKeyDown(key.keyCode))
                                 {
                                     key.isDoubleDown = true;
                                     key.realInterval = 0f;
                                 }
-                                else if (Input.GetKeyUp(key.GetKey()))
+                                else if (Input.GetKeyUp(key.keyCode))
                                 {
                                     key.acceptDoubleDown = false;
                                 }
@@ -170,7 +171,7 @@ namespace Core
                         }
                         else
                         {
-                            if (Input.GetKeyUp(key.GetKey()))
+                            if (Input.GetKeyUp(key.keyCode))
                             {
                                 key.acceptDoubleDown = true;
                                 key.realInterval = 0f;
@@ -179,7 +180,7 @@ namespace Core
 
                         break;
                     case KeyTrigger.Continue:
-                        if (Input.GetKey(key.GetKey()))
+                        if (Input.GetKey(key.keyCode))
                         {
                             key.isDown = true;
                         }
@@ -196,7 +197,7 @@ namespace Core
             foreach (var key in valueKeys)
             {
                 if (key.enable) continue;
-                if (Input.GetKey(key.GetKey()))
+                if (Input.GetKey(key.keyCode))
                 {
                     key.value = Mathf.Clamp(key.value + key.addSpeed * Time.deltaTime, key.range.x, key.range.y);
                 }
@@ -212,11 +213,11 @@ namespace Core
             foreach (var key in axisKeys)
             {
                 if (key.enable == false) continue;
-                if (Input.GetKey(key.GetPosKey()))
+                if (Input.GetKey(key.posKey))
                 {
                     key.value = Mathf.Clamp(key.value + key.addSpeed * Time.deltaTime, key.range.x, key.range.y);
                 }
-                else if (Input.GetKey(key.GetNegKey()))
+                else if (Input.GetKey(key.negKey))
                 {
                     key.value = Mathf.Clamp(key.value - key.addSpeed * Time.deltaTime, key.range.x, key.range.y);
                 }
@@ -242,21 +243,21 @@ namespace Core
             json["keys"] = new JsonData();
             foreach (var key in keys)
             {
-                json["keys"][key.name] = key.GetKey().ToString();
+                json["keys"][key.name] = key.keyCode.ToString();
             }
 
             json["valuekeys"] = new JsonData();
             foreach (var valueKey in valueKeys)
             {
-                json["valuekeys"][valueKey.name] = valueKey.GetKey().ToString();
+                json["valuekeys"][valueKey.name] = valueKey.keyCode.ToString();
             }
 
             json["axiskeys"] = new JsonData();
             foreach (var axisKey in axisKeys)
             {
                 json["axiskeys"][axisKey.name] = new JsonData();
-                json["axiskeys"][axisKey.name]["pos"] = axisKey.GetPosKey().ToString();
-                json["axiskeys"][axisKey.name]["neg"] = axisKey.GetNegKey().ToString();
+                json["axiskeys"][axisKey.name]["pos"] = axisKey.posKey.ToString();
+                json["axiskeys"][axisKey.name]["neg"] = axisKey.negKey.ToString();
             }
 
             string filePath = Application.dataPath + path;
@@ -267,7 +268,7 @@ namespace Core
             sw.Dispose();
         }
         
-        public void ParseInputData(string path)
+        public void LoadInputData(string path)
         {
             string filePath = Application.dataPath + path;
             if(!File.Exists(filePath)) return;
