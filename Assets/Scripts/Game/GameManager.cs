@@ -1,7 +1,5 @@
-﻿using System;
-using Core;
+﻿using Core;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
 namespace Game
 {
