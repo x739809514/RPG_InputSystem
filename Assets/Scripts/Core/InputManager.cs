@@ -9,13 +9,17 @@ namespace Core
         private string customDataSavePath = "Resources/Input/custom";
         private InputData inputData;
         private bool activeInput;
+        private string fileName;
         private Action<KeyCode> setKeyAction;
         //use for test
         private Action<KeyCode> displayAction;
+        public static InputManager instance;
 
-        public InputManager(InputData data)
+        public InputManager(InputData data,string name)
         {
+            instance = this;
             inputData = data;
+            fileName = name;
         }
 
         public void Update(float deltaTime)
@@ -88,27 +92,46 @@ namespace Core
 #endregion
 
 
+#region SetKeyEnable
+
+        public void SetKeyEnable(string name, bool isEnable)
+        {
+            inputData.SetKeyEnable(name,isEnable);
+        }
+
+        public void SetValueKeyEnable(string name,bool isEnable)
+        {
+            inputData.SetValueKeyEnable(name,isEnable);
+        }
+
+        public void SetAxisKeyEnable(string name, bool isEnable)
+        {
+            inputData.SetAxisKeyEnable(name,isEnable);
+        }
+
+#endregion
+
 #region Save
 
         public void SaveDefaultSetting()
         {
-            inputData.SaveInputData(defaultDataSavePath);
+            inputData.SaveInputData(defaultDataSavePath+"/"+fileName);
         }
 
         public void LoadDefaultSetting()
         {
-            inputData.LoadInputData(defaultDataSavePath);
+            inputData.LoadInputData(defaultDataSavePath+"/"+fileName);
         }
 
 
         public void SaveCustomSetting()
         {
-            inputData.SaveInputData(customDataSavePath);
+            inputData.SaveInputData(customDataSavePath+"/"+fileName);
         }
 
         public void LoadCustomSetting()
         {
-            inputData.LoadInputData(customDataSavePath);            
+            inputData.LoadInputData(customDataSavePath+"/"+fileName);            
         }
 #endregion
 

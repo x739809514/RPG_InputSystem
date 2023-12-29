@@ -16,7 +16,6 @@ public class Key
 {
     public string name;
     public KeyTrigger trigger;
-    [HideInInspector]
     public bool enable=true;
     [HideInInspector]
     public bool isDown;
@@ -50,8 +49,7 @@ public class ValueKey
     public float value;
     public float addSpeed = 1f;
     public KeyCode keyCode;
-    [HideInInspector]
-    public bool enable;
+    public bool enable=true;
 
     public void SetKey(KeyCode key)
     {
@@ -75,8 +73,7 @@ public class AxisKey
     public KeyCode posKey;
     public KeyCode negKey;
     public float addSpeed = 1f;
-    [HideInInspector]
-    public bool enable;
+    public bool enable=true;
 
     public void SetKey(KeyCode pos, KeyCode neg)
     {

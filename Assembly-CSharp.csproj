@@ -46,12 +46,16 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\Core\InputData.cs" />
+     <Compile Include="Assets\Scripts\Player\PlayerController.cs" />
      <Compile Include="Assets\Scripts\Core\Key.cs" />
+     <Compile Include="Assets\Scripts\Game\GameManager.cs" />
      <Compile Include="Assets\Scripts\Core\InputManager.cs" />
      <Folder Include="Assets" />
      <Folder Include="Assets\Scripts\Core" />
+     <Folder Include="Assets\Scripts\Player" />
      <Folder Include="Assets\Resoueces" />
      <Folder Include="Assets\Resoueces\Input\custom" />
+     <Folder Include="Assets\Scripts\Game" />
      <Folder Include="Assets\Scripts" />
      <Folder Include="Assets\Scenes" />
      <Folder Include="Assets\Resoueces\Input" />
